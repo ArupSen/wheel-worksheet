@@ -89,7 +89,26 @@ var formHandlers = {
       //display.showLengths();
       wheels.saveToLocalStorage();
       event.preventDefault();
-    }
+    },
+  newSheet: function() {
+    // get hold of all the inputs and set their values to empty string
+    // they may also be disabled so enable them
+    // also disable other menu buttons except save
+    var inputs = document.getElementsByTagName('input');
+    Array.from(inputs).forEach(function (elem) {
+      elem.value = "";
+      elem.removeAttribute('disabled');
+    });
+    var notes = document.getElementById('notes');
+    notes.value = '';
+    notes.removeAttribute('disabled');
+    var edit = document.getElementById('edit');
+    var previous = document.getElementById('previous');
+    var next = document.getElementById('next');
+    edit.setAttribute('disabled', 'disabled');
+    previous.setAttribute('disabled', 'disabled');
+    next.setAttribute('disabled', 'disabled');
+  }
 };
 
 var display = {
