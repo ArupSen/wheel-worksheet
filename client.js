@@ -134,7 +134,7 @@ var display = {
 /*
 TODO for pure js version
 [done] create a calculate function
-create a form validation function
+create a form validation function called when you save
 [done] create an area to display results
 
 Before developing the Spoke Length Calculator further
@@ -143,7 +143,7 @@ What I want is to create a digital version of my worksheet
 - it should allow entry of same data as worksheet
 - it should allow you to 'turn' pages
 - it should allow you to edit pages
-- it should allow you to save pages to storage
+- [done] it should allow you to save pages to storage
 - it should allow searching of pages
 - it should have some data for parts
 
@@ -157,4 +157,10 @@ What I want is to create a digital version of my worksheet
 // Fields should be disabled in browse mode but enabled in edit mode
 
 
+- remove old hub fields and set up new 3 x 3 grid to accupt values
+- refactor calculator to accept cross parameter
+- display should fill 4 calculations
+- should worksheet objects hold calculation data repeat each time?
+- create a calculation for the costs
+- create a jquery.ajax way to save and load data
 */
