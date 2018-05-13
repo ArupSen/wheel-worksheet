@@ -47,6 +47,10 @@
       };
     },
     saveToLocalStorage: function() {
+      // what if the localstorage is empty
+      if (localStorage.length === 0 || localStorage.getItem('worksheets') === null) {
+        localStorage.setItem('worksheets', '[]');
+      }
       // this will save the whole workSheet array to localstorage
       // we don't want to overwrite what is currently stored
       // but add to what is already there
