@@ -18,6 +18,7 @@
     },
     calculateLength: function(wheelset) {
       // set all the variables from a wheelset object
+      // wheelset object has 5 properties
     var halfSpokeCount = parseFloat(wheelset.numberOfSpokes) / 2;
     var halfERD = parseFloat(wheelset.effectiveRimDiameter) / 2;
     var centreToFlangeSquared = Math.pow(parseFloat(wheelset.centreToFlange), 2);
@@ -38,13 +39,7 @@
                                +centreToFlangeSquared)
                                -(halfHoleSize)).toFixed(1);
       }
-       return {
-        radial: length[0],
-        oneCross: length[1],
-        twoCross: length[2],
-        threeCross: length[3],
-        fourCross: length[4]
-      };
+       return length[wheelset.crossNumber];
     },
     saveToLocalStorage: function() {
       // what if the localstorage is empty
@@ -90,7 +85,7 @@ var formHandlers = {
       var notes = document.getElementById('notes').value;
       values.notes = notes;
       wheels.addSheet(values);
-      //display.showLengths();
+      display.showLengths();
       wheels.saveToLocalStorage();
       event.preventDefault();
     },
@@ -118,17 +113,53 @@ var formHandlers = {
 var display = {
   showLengths: function() {
   // will display one set of lengths
-  // create a <p> tag with key, value of length object
-  // currently wheelset object is hard coded to zero
-  // but that will be passed in as a parameter
-    var lengthObject = wheels.calculateLength(wheels.workSheet[0]);
-    var lengthDiv = document.getElementById('lengths');
-    var lengthObjectKeys = Object.keys(lengthObject);
-    lengthObjectKeys.forEach(function(pattern) {
-      var pTag = document.createElement('p');
-      pTag.textContent = pattern.toUpperCase() + ": " + lengthObject[pattern] + " mm";
-      lengthDiv.appendChild(pTag);
+  // 4 different lengths need to be calculated
+  // calculateLength takes a wheelSet object with 6 properties
+  // should have a crossNumber property
+    var currentSheet = wheels.workSheet[0];
+    var frontLeft = {
+      crossNumber: currentSheet.pattern,
+      centreToFlange: currentSheet.frontLeftCentreToFlange,
+      effectiveRimDiameter: currentSheet.effectiveRimDiameterFront,
+      spokeHoleDiameter: currentSheet.frontLeftHoleDiameter,
+      flangeDiameter: currentSheet.frontLeftFlangeDiameter,
+      numberOfSpokes: currentSheet.numberOfSpokesFront
+    }
+    var frontRight = {
+      crossNumber: currentSheet.pattern,
+      centreToFlange: currentSheet.frontRightCentreToFlange,
+      effectiveRimDiameter: currentSheet.effectiveRimDiameterFront,
+      spokeHoleDiameter: currentSheet.frontRightHoleDiameter,
+      flangeDiameter: currentSheet.frontRightFlangeDiameter,
+      numberOfSpokes: currentSheet.numberOfSpokesFront
+    }
+    var rearLeft = {
+      crossNumber: currentSheet.pattern,
+      centreToFlange: currentSheet.rearLeftCentreToFlange,
+      effectiveRimDiameter: currentSheet.effectiveRimDiameterRear,
+      spokeHoleDiameter: currentSheet.rearLeftHoleDiameter,
+      flangeDiameter: currentSheet.rearLeftFlangeDiameter,
+      numberOfSpokes: currentSheet.numberOfSpokesRear
+    }
+    var rearRight = {
+      crossNumber: currentSheet.pattern,
+      centreToFlange: currentSheet.frontLeftCentreToFlange,
+      effectiveRimDiameter: currentSheet.effectiveRimDiameterRear,
+      spokeHoleDiameter: currentSheet.rearLeftHoleDiameter,
+      flangeDiameter: currentSheet.rearLeftFlangeDiameter,
+      numberOfSpokes: currentSheet.numberOfSpokesRear
+    }
+    var  wheelSpecs = [frontLeft, frontRight, rearLeft, rearRight];
+    var spokeLengths = [];
+    wheelSpecs.forEach(function(spec) {
+      spokeLengths.push(wheels.calculateLength(spec));
     });
+    var spokeData = Array.from(document.getElementById('lengths').getElementsByTagName('td'));
+    debugger;
+    for (var i = 1; i < spokeData.length; i+=3) {
+        spokeData[i].innerText = spokeLengths[i % 4];
+        spokeData[i + 1].innerText = wheelSpecs[i % 4].numberOfSpokes / 2;
+    }
   }
 };
 /*
