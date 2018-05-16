@@ -12,6 +12,7 @@
       spokeHeadWashers: 0.1,
       rimTape: 2.5
     },
+    sampleData: '[{"nameOfClient":"Alexander Baxevanis","clientContact":"alex.baxevanis@gmail.com","dateReceived":"2017-02-09","rims":"Rigida Star 19","frontHub":"Sturmey Archer HDS12-DYN HUB","rearHub":"VENTURA","spoke":"","patternFront":"3","patternRear":"3","rimTape":"No","numberOfSpokesFront":"36","numberOfSpokesRear":"36","effectiveRimDiameterFront":"602","effectiveRimDiameterRear":"602","frontLeftCentreToFlange":"29","frontLeftFlangeDiameter":"65","frontLeftHoleDiameter":"3","frontRightCentreToFlange":"29","frontRightFlangeDiameter":"65","frontRightHoleDiameter":"3","rearLeftCentreToFlange":"25","rearLeftFlangeDiameter":"48","rearLeftHoleDiameter":"2.8","rearRightCentreToFlange":"23","rearRightFlangeDiameter":"48","rearRightHoleDiameter":"2.8","notes":""}]',
     addSheet: function(values) {
       // values is an object created by the formHandler method
       this.workSheet.push(values);
@@ -118,7 +119,7 @@ var display = {
   // should have a crossNumber property
     var currentSheet = wheels.workSheet[0];
     var frontLeft = {
-      crossNumber: currentSheet.pattern,
+      crossNumber: currentSheet.patternFront,
       centreToFlange: currentSheet.frontLeftCentreToFlange,
       effectiveRimDiameter: currentSheet.effectiveRimDiameterFront,
       spokeHoleDiameter: currentSheet.frontLeftHoleDiameter,
@@ -126,7 +127,7 @@ var display = {
       numberOfSpokes: currentSheet.numberOfSpokesFront
     }
     var frontRight = {
-      crossNumber: currentSheet.pattern,
+      crossNumber: currentSheet.patternFront,
       centreToFlange: currentSheet.frontRightCentreToFlange,
       effectiveRimDiameter: currentSheet.effectiveRimDiameterFront,
       spokeHoleDiameter: currentSheet.frontRightHoleDiameter,
@@ -134,7 +135,7 @@ var display = {
       numberOfSpokes: currentSheet.numberOfSpokesFront
     }
     var rearLeft = {
-      crossNumber: currentSheet.pattern,
+      crossNumber: currentSheet.patternRear,
       centreToFlange: currentSheet.rearLeftCentreToFlange,
       effectiveRimDiameter: currentSheet.effectiveRimDiameterRear,
       spokeHoleDiameter: currentSheet.rearLeftHoleDiameter,
@@ -142,7 +143,7 @@ var display = {
       numberOfSpokes: currentSheet.numberOfSpokesRear
     }
     var rearRight = {
-      crossNumber: currentSheet.pattern,
+      crossNumber: currentSheet.patternRear,
       centreToFlange: currentSheet.frontLeftCentreToFlange,
       effectiveRimDiameter: currentSheet.effectiveRimDiameterRear,
       spokeHoleDiameter: currentSheet.rearLeftHoleDiameter,
@@ -154,8 +155,10 @@ var display = {
     wheelSpecs.forEach(function(spec) {
       spokeLengths.push(wheels.calculateLength(spec));
     });
+    // if it's only the front or the rear wheel, what then?
+    // some of the wheelSpec objects may be null
+    // then it's just a case of changing the boundaries of the for loop
     var spokeData = Array.from(document.getElementById('lengths').getElementsByTagName('td'));
-    debugger;
     for (var i = 1; i < spokeData.length; i+=3) {
         spokeData[i].innerText = spokeLengths[i % 4];
         spokeData[i + 1].innerText = wheelSpecs[i % 4].numberOfSpokes / 2;
