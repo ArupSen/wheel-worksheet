@@ -108,6 +108,12 @@ var formHandlers = {
     edit.setAttribute('disabled', 'disabled');
     previous.setAttribute('disabled', 'disabled');
     next.setAttribute('disabled', 'disabled');
+  },
+  load: function(event) {
+    localStorage.clear();
+    localStorage.setItem('worksheets', wheels.sampleData);
+    wheels.workSheet = JSON.parse(localStorage.getItem('worksheets'));
+    event.preventDefault();
   }
 };
 
