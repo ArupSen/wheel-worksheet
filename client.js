@@ -12,7 +12,7 @@
       spokeHeadWashers: 0.1,
       rimTape: 2.5
     },
-    sampleData: '[{"nameOfClient":"Alexander Baxevanis","clientContact":"alex.baxevanis@gmail.com","dateReceived":"2017-02-09","rims":"Rigida Star 19","frontHub":"Sturmey Archer HDS12-DYN HUB","rearHub":"VENTURA","spoke":"","patternFront":"3","patternRear":"3","rimTape":"No","numberOfSpokesFront":"36","numberOfSpokesRear":"36","effectiveRimDiameterFront":"602","effectiveRimDiameterRear":"602","frontLeftCentreToFlange":"29","frontLeftFlangeDiameter":"65","frontLeftHoleDiameter":"3","frontRightCentreToFlange":"29","frontRightFlangeDiameter":"65","frontRightHoleDiameter":"3","rearLeftCentreToFlange":"25","rearLeftFlangeDiameter":"48","rearLeftHoleDiameter":"2.8","rearRightCentreToFlange":"23","rearRightFlangeDiameter":"48","rearRightHoleDiameter":"2.8","notes":""}]',
+    sampleData: '[{"nameOfClient":"Alexander Baxevanis","clientContact":"alex.baxevanis@gmail.com","dateReceived":"2017-02-09","rims":"Rigida Star 19","frontHub":"Sturmey Archer HDS12-DYN HUB","rearHub":"VENTURA","spoke":"","patternFront":"3","patternRear":"3","rimTape":"No","numberOfSpokesFront":"36","numberOfSpokesRear":"36","effectiveRimDiameterFront":"602","effectiveRimDiameterRear":"602","frontLeftCentreToFlange":"29","frontLeftFlangeDiameter":"65","frontLeftHoleDiameter":"3","frontRightCentreToFlange":"29","frontRightFlangeDiameter":"65","frontRightHoleDiameter":"3","rearLeftCentreToFlange":"25","rearLeftFlangeDiameter":"48","rearLeftHoleDiameter":"2.8","rearRightCentreToFlange":"23","rearRightFlangeDiameter":"48","rearRightHoleDiameter":"2.8","notes":"","id":"km6owflxmte7pnc1"},{"nameOfClient":"Mark Childerstone","clientContact":"","dateReceived":"2017-02-06","rims":"Mavic A119","frontHub":"Shimano HB RM70","rearHub":"SRAM Automatix","spoke":"","patternFront":"0","patternRear":"3","rimTape":"","numberOfSpokesFront":"36","numberOfSpokesRear":"36","effectiveRimDiameterFront":"608","effectiveRimDiameterRear":"608","frontLeftCentreToFlange":"34","frontLeftFlangeDiameter":"38","frontLeftHoleDiameter":"2.5","frontRightCentreToFlange":"34","frontRightFlangeDiameter":"38","frontRightHoleDiameter":"2.5","rearLeftCentreToFlange":"25","rearLeftFlangeDiameter":"70","rearLeftHoleDiameter":"3.0","rearRightCentreToFlange":"29","rearRightFlangeDiameter":"70","rearRightHoleDiameter":"3.0","notes":"Spoke washers for the rear wheel","id":"5ofqy3bfmc32s6ap"},{"nameOfClient":"Tim Powell","clientContact":"","dateReceived":"2017-02-06","rims":"Far Sports","frontHub":"White industries T11 Black","rearHub":"White industries T11 Black","spoke":"Sapim CX-Ray Black","patternFront":"0","patternRear":"2","rimTape":"","numberOfSpokesFront":"20","numberOfSpokesRear":"24","effectiveRimDiameterFront":"570","effectiveRimDiameterRear":"570","frontLeftCentreToFlange":"35.5","frontLeftFlangeDiameter":"35.0","frontLeftHoleDiameter":"2.4","frontRightCentreToFlange":"35.5","frontRightFlangeDiameter":"35.0","frontRightHoleDiameter":"2.4","rearLeftCentreToFlange":"37.0","rearLeftFlangeDiameter":"40.0","rearLeftHoleDiameter":"2.4","rearRightCentreToFlange":"16.0","rearRightFlangeDiameter":"53.0","rearRightHoleDiameter":"2.4","notes":"Black nipples","id":"984ulk1o9b7hzk6l"}]',
     addSheet: function(values) {
       // values is an object created by the formHandler method
       this.workSheet.push(values);
@@ -85,6 +85,18 @@ var formHandlers = {
       });
       var notes = document.getElementById('notes').value;
       values.notes = notes;
+      // create a random string for workSheet ID
+      function randomString() {
+        var chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+        var output = '';
+        for (var i=0; i < 16; i++) {
+          var randomNumber = Math.floor(Math.random() * chars.length);
+          output += chars.charAt(randomNumber);
+        }
+        return output;
+      }
+      // assign a 16 character random string as id to object
+      values.id = randomString();
       wheels.addSheet(values);
       display.showLengths();
       wheels.saveToLocalStorage();
