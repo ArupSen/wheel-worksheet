@@ -52,8 +52,16 @@
       // but add to what is already there
       if (this.workSheet.length > 0) {
         var loadedSheets = JSON.parse(localStorage.getItem('worksheets'));
+        var loadedSheetsIDs = [];
+        loadedSheets.forEach(function(sheet) {
+          loadedSheetsIDs.push(sheet.id);
+        });
         this.workSheet.forEach(function(sheet) {
-        loadedSheets.push(sheet);
+          // we need to check for duplicates - is it already saved to localStorage?
+          // if the id of the sheet isn't in the loadedSheets
+          if(!loadedSheetsIDs.includes(sheet.id)) {
+            loadedSheets.push(sheet);
+          }
         })
         localStorage.setItem('worksheets', JSON.stringify(loadedSheets));
       // perhaps some sort of alert that says your data has been saved
