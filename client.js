@@ -134,6 +134,12 @@ var formHandlers = {
     localStorage.setItem('worksheets', wheels.sampleData);
     wheels.workSheet = JSON.parse(localStorage.getItem('worksheets'));
     event.preventDefault();
+  },
+  browse: function(event) {
+    display.disableInputs();
+    // should sync and then load but for now will load samples
+    formHandlers.load(event);
+    display.viewSheet(0);
   }
 };
 
@@ -189,6 +195,24 @@ var display = {
         spokeData[i].innerText = spokeLengths[i % 4];
         spokeData[i + 1].innerText = wheelSpecs[i % 4].numberOfSpokes / 2;
     }
+  },
+  disableInputs: function() {
+    var inputs = document.getElementsByTagName('input');
+    Array.from(inputs).forEach(function (elem) {
+      elem.value = "";
+      elem.setAttribute('disabled', 'disabled');
+    });
+    var notes = document.getElementById('notes');
+    notes.setAttribute('disabled', 'disabled');
+  },
+  // displays a sheet
+  viewSheet: function(sheetNumber) {
+    var inputs = document.getElementsByTagName('input');
+    Array.from(inputs).forEach(function (elem) {
+      elem.value = wheels.workSheet[sheetNumber][elem.id];
+    });
+    var notes = document.getElementById('notes');
+    notes.value =  wheels.workSheet[sheetNumber]['notes'];
   }
 };
 /*
