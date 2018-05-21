@@ -66,6 +66,16 @@
         localStorage.setItem('worksheets', JSON.stringify(loadedSheets));
       // perhaps some sort of alert that says your data has been saved
       }
+    },
+    // previous / next buttons need to know where the sheet is located
+    getArrayIndex: function(sheetID) {
+      var arrayIndex;
+      this.workSheet.forEach(function(sheet, index) {
+        if (sheet.id === sheetID) {
+          arrayIndex = index;
+        }
+      });
+      return arrayIndex;
     }
   };
 
@@ -140,6 +150,14 @@ var formHandlers = {
     // should sync and then load but for now will load samples
     formHandlers.load(event);
     display.viewSheet(0);
+  },
+  next: function(event) {
+    var sheetID = document.getElementById('id');
+    var currentIndex = wheels.getArrayIndex(sheetID.value);
+    if (currentIndex < wheels.workSheet.length - 1) {
+      display.viewSheet(currentIndex + 1);
+    }
+    event.preventDefault();
   }
 };
 

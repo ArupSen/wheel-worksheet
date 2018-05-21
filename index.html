@@ -22,7 +22,7 @@
       <button id="edit" class="btn btn-sm btn-outline-secondary">Edit</button>
       <button id="previous" class="btn btn-sm btn-outline-secondary">&lt;&lt; Previous</button>
       <button id="browse" onclick="formHandlers.browse(event)" class="btn btn-sm btn-outline-secondary">Browse</button>
-      <button id="next" class="btn btn-sm btn-outline-secondary">Next &gt;&gt;</button>
+      <button id="next" onclick="formHandlers.next(event)" class="btn btn-sm btn-outline-secondary">Next &gt;&gt;</button>
       <button id="load" onclick="formHandlers.load(event)" class="btn btn-sm btn-outline-info">Load</button>
     </div>
     <main>
@@ -30,6 +30,7 @@
         <div class="row">
        <div class="card">
       <form>
+        <input type="hidden" id="id">
         <div class="form-group row">
         <label class="col-form-label col-sm-3">Name of client</label>
           <div class="col-sm-9">
