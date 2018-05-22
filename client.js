@@ -103,6 +103,8 @@ var formHandlers = {
       });
       var notes = document.getElementById('notes').value;
       values.notes = notes;
+      values.patternFront = document.getElementById('patternFront').value;
+      values.patternRear = document.getElementById('patternRear').value;
       // create a random string for workSheet ID
       function randomString() {
         var chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
@@ -132,6 +134,8 @@ var formHandlers = {
     var notes = document.getElementById('notes');
     notes.value = '';
     notes.removeAttribute('disabled');
+    document.getElementById('patternFront').removeAttribute('disabled');
+    document.getElementById('patternRear').removeAttribute('disabled');
     var edit = document.getElementById('edit');
     var previous = document.getElementById('previous');
     var next = document.getElementById('next');
@@ -222,6 +226,10 @@ var display = {
     });
     var notes = document.getElementById('notes');
     notes.setAttribute('disabled', 'disabled');
+    var front = document.getElementById('patternFront');
+    var rear = document.getElementById('patternRear');
+    front.setAttribute('disabled', 'disabled');
+    rear.setAttribute('disabled', 'disabled');
   },
   // displays a sheet
   viewSheet: function(sheetNumber) {
@@ -231,6 +239,12 @@ var display = {
     });
     var notes = document.getElementById('notes');
     notes.value =  wheels.workSheet[sheetNumber]['notes'];
+    var front = document.getElementById('patternFront');
+    var rear = document.getElementById('patternRear');
+    var patternFront = wheels.workSheet[sheetNumber]['patternFront'];
+    front.options[patternFront].setAttribute('selected', true);
+    var patternRear = wheels.workSheet[sheetNumber]['patternRear'];
+    rear.options[patternRear].setAttribute('selected', true);
   }
 };
 /*
