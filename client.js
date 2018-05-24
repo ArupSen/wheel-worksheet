@@ -112,8 +112,8 @@ var formHandlers = {
           });
       });
       values.notes = dom.notes.value;
-      values.patternFront = dom.patternFront.value;
-      values.patternRear = dom.patternRear.value;
+      values.patternFront = dom.front.value;
+      values.patternRear = dom.rear.value;
       // create a random string for workSheet ID
       function randomString() {
         var chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
@@ -127,7 +127,7 @@ var formHandlers = {
       // assign a 16 character random string as id to object
       values.id = randomString();
       wheels.addSheet(values);
-      display.showLengths();
+      display.showLengths(wheels.workSheet.length - 1);
       wheels.saveToLocalStorage();
       event.preventDefault();
     },
@@ -170,12 +170,12 @@ var formHandlers = {
 };
 
 var display = {
-  showLengths: function() {
+  showLengths: function(sheetNumber) {
   // will display one set of lengths
   // 4 different lengths need to be calculated
   // calculateLength takes a wheelSet object with 6 properties
   // should have a crossNumber property
-    var currentSheet = wheels.workSheet[0];
+    var currentSheet = wheels.workSheet[sheetNumber];
     var frontLeft = {
       crossNumber: currentSheet.patternFront,
       centreToFlange: currentSheet.frontLeftCentreToFlange,
@@ -240,6 +240,7 @@ var display = {
     dom.notes.value =  currentSheet['notes'];
     dom.front.options[currentSheet.patternFront].setAttribute('selected', true);
     dom.rear.options[currentSheet.patternRear].setAttribute('selected', true);
+    this.showLengths(sheetNumber);
   }
 };
 /*
