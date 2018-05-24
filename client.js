@@ -166,6 +166,14 @@ var formHandlers = {
       display.viewSheet(currentIndex + 1);
     }
     event.preventDefault();
+  },
+  previous: function(event) {
+    var sheetID = document.getElementById('id');
+    var currentIndex = wheels.getArrayIndex(sheetID.value);
+    if (currentIndex >= 1) {
+      display.viewSheet(currentIndex - 1);
+    }
+    event.preventDefault();
   }
 };
 
