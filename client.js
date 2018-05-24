@@ -1,4 +1,15 @@
   console.log('Not working? - debugger!');
+  // dom object holds repeated dom lookups
+  var dom = {
+    inputs: document.getElementsByTagName('input'),
+    notes: document.getElementById('notes'),
+    front: document.getElementById('patternFront'),
+    rear: document.getElementById('patternRear'),
+    edit: document.getElementById('edit'),
+    previous: document.getElementById('previous'),
+    next: document.getElementById('next')
+  };
+
   // wheels object will hold wheelset data
   // methods to manipulate that array
   var wheels = {
@@ -86,25 +97,23 @@ var formHandlers = {
   //         {value: 2.7, writable: true})
     save: function(event){
       var values = {};
-      var inputs = document.getElementsByTagName('input');
-      // inputs is a NodeList
+      // dom.inputs is a NodeList
       // Array.from makes it into an array so that we can use forEach
       // now I can use an arbitrary number of inputs
-      Array.from(inputs).forEach(function(elem) {
+      Array.from(dom.inputs).forEach(function(input) {
       // Object.defineProperty allows property creation
       // Using the element id names properties
         Object.defineProperty(
           values,
-          elem.id,
-          {value: elem.value,
+          input.id,
+          {value: input.value,
            writable: true,
            enumerable: true
           });
       });
-      var notes = document.getElementById('notes').value;
-      values.notes = notes;
-      values.patternFront = document.getElementById('patternFront').value;
-      values.patternRear = document.getElementById('patternRear').value;
+      values.notes = dom.notes.value;
+      values.patternFront = dom.patternFront.value;
+      values.patternRear = dom.patternRear.value;
       // create a random string for workSheet ID
       function randomString() {
         var chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
@@ -126,22 +135,17 @@ var formHandlers = {
     // get hold of all the inputs and set their values to empty string
     // they may also be disabled so enable them
     // also disable other menu buttons except save
-    var inputs = document.getElementsByTagName('input');
-    Array.from(inputs).forEach(function (elem) {
-      elem.value = "";
-      elem.removeAttribute('disabled');
+    Array.from(dom.inputs).forEach(function (input) {
+      input.value = '';
+      input.removeAttribute('disabled');
     });
-    var notes = document.getElementById('notes');
-    notes.value = '';
-    notes.removeAttribute('disabled');
-    document.getElementById('patternFront').removeAttribute('disabled');
-    document.getElementById('patternRear').removeAttribute('disabled');
-    var edit = document.getElementById('edit');
-    var previous = document.getElementById('previous');
-    var next = document.getElementById('next');
-    edit.setAttribute('disabled', 'disabled');
-    previous.setAttribute('disabled', 'disabled');
-    next.setAttribute('disabled', 'disabled');
+    dom.notes.value = '';
+    dom.notes.removeAttribute('disabled');
+    dom.front.removeAttribute('disabled');
+    dom.rear.removeAttribute('disabled');
+    dom.edit.setAttribute('disabled', 'disabled');
+    dom.previous.setAttribute('disabled', 'disabled');
+    dom.next.setAttribute('disabled', 'disabled');
   },
   load: function(event) {
     localStorage.clear();
@@ -219,32 +223,23 @@ var display = {
     }
   },
   disableInputs: function() {
-    var inputs = document.getElementsByTagName('input');
-    Array.from(inputs).forEach(function (elem) {
-      elem.value = "";
-      elem.setAttribute('disabled', 'disabled');
+    Array.from(dom.inputs).forEach(function (input) {
+      input.value = "";
+      input.setAttribute('disabled', 'disabled');
     });
-    var notes = document.getElementById('notes');
-    notes.setAttribute('disabled', 'disabled');
-    var front = document.getElementById('patternFront');
-    var rear = document.getElementById('patternRear');
-    front.setAttribute('disabled', 'disabled');
-    rear.setAttribute('disabled', 'disabled');
+    dom.notes.setAttribute('disabled', 'disabled');
+    dom.front.setAttribute('disabled', 'disabled');
+    dom.rear.setAttribute('disabled', 'disabled');
   },
   // displays a sheet
   viewSheet: function(sheetNumber) {
-    var inputs = document.getElementsByTagName('input');
-    Array.from(inputs).forEach(function (elem) {
-      elem.value = wheels.workSheet[sheetNumber][elem.id];
+    var currentSheet = wheels.workSheet[sheetNumber];
+    Array.from(dom.inputs).forEach(function (input) {
+      input.value = currentSheet[input.id];
     });
-    var notes = document.getElementById('notes');
-    notes.value =  wheels.workSheet[sheetNumber]['notes'];
-    var front = document.getElementById('patternFront');
-    var rear = document.getElementById('patternRear');
-    var patternFront = wheels.workSheet[sheetNumber]['patternFront'];
-    front.options[patternFront].setAttribute('selected', true);
-    var patternRear = wheels.workSheet[sheetNumber]['patternRear'];
-    rear.options[patternRear].setAttribute('selected', true);
+    dom.notes.value =  currentSheet['notes'];
+    dom.front.options[currentSheet.patternFront].setAttribute('selected', true);
+    dom.rear.options[currentSheet.patternRear].setAttribute('selected', true);
   }
 };
 /*
@@ -254,9 +249,9 @@ create a form validation function called when you save
 [done] create an area to display results
 
 Before developing the Spoke Length Calculator further
-What I want is to create a digital version of my worksheet
+What I want is to create a digital version of my workSheet
 - it should look similar (but not identical) to it
-- it should allow entry of same data as worksheet
+- it should allow entry of same data as workSheet
 - it should allow you to 'turn' pages
 - it should allow you to edit pages
 - [done] it should allow you to save pages to storage
@@ -265,18 +260,18 @@ What I want is to create a digital version of my worksheet
 
 // use placeholder text to save space
 // use an object for priceList
-// save function should save that worksheet and do a cost and spoke length calculation. Then add to local storage
+// save function should save that workSheet and do a cost and spoke length calculation. Then add to local storage
 [done] with all the extra data should wheelSet objects now be called workSheet?
 // have a look at Bootstrap validations
 // buttons should be disabled when they just repeat the current action such as saving the same data multiple times
-// should worksheet objects have unique ids? For example when you edit or is array index enough?
+// should workSheet objects have unique ids? For example when you edit or is array index enough?
 // Fields should be disabled in browse mode but enabled in edit mode
 
 
-- remove old hub fields and set up new 3 x 3 grid to accupt values
-- refactor calculator to accept cross parameter
-- display should fill 4 calculations
-- should worksheet objects hold calculation data repeat each time?
+- [done] remove old hub fields and set up new 3 x 3 grid to accupt values
+- [done] refactor calculator to accept cross parameter
+- [done] display should fill 4 calculations
+- should workSheet objects hold calculation data repeat each time?
 - create a calculation for the costs
 - create a jquery.ajax way to save and load data
 */
