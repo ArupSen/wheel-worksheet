@@ -154,10 +154,10 @@ var formHandlers = {
       wheels.addSheet(values);
       display.showLengths(wheels.workSheet.length - 1);
       wheels.saveToLocalStorage();
-      dom.save.setAttribute('disabled', 'disabled');
+      display.disableButton('save');
       display.disableInputs();
-      dom.edit.removeAttribute('disabled');
-      dom.browse.removeAttribute('disabled');
+      display.enableButton('edit');
+      display.enableButton('browse');
       event.preventDefault();
     },
   newSheet: function() {
@@ -169,14 +169,14 @@ var formHandlers = {
       input.removeAttribute('disabled');
     });
     dom.notes.value = '';
+    display.enableButton('front');
     dom.notes.removeAttribute('disabled');
-    dom.front.removeAttribute('disabled');
-    dom.rear.removeAttribute('disabled');
-    dom.edit.setAttribute('disabled', 'disabled');
-    dom.previous.setAttribute('disabled', 'disabled');
-    dom.next.setAttribute('disabled', 'disabled');
-    dom.browse.setAttribute('disabled', 'disabled');
-    dom.load.setAttribute('disabled', 'disabled');
+    display.enableButton('rear');
+    display.disableButton('edit');
+    display.disableButton('previous');
+    display.disableButton('next');
+    display.disableButton('browse');
+    display.disableButton('load');
   },
   load: function(event) {
     localStorage.clear();
@@ -211,7 +211,8 @@ var formHandlers = {
  * The display object contains the following:
  * 1. showLengths - appends lengths to spokes required table
  * 2. disableInputs - for showing data rather than getting
- * 3. viewSheet - displays all the values held in a sheet
+ * 3. clearInputs - sets the value of the inputs to empty
+ * 4. viewSheet - displays all the values held in a sheet
  */
 var display = {
   showLengths: function(sheetNumber) {
@@ -290,6 +291,14 @@ var display = {
     dom.front.options[currentSheet.patternFront].setAttribute('selected', true);
     dom.rear.options[currentSheet.patternRear].setAttribute('selected', true);
     this.showLengths(sheetNumber);
+  },
+  disableButton: function(button) {
+    // buttons are looked up in the dom object
+    // button arg will be dom.buttonName
+     dom[button].setAttribute('disabled', 'disabled');
+  },
+  enableButton: function(button) {
+    dom[button].removeAttribute('disabled');
   }
 };
 /*
