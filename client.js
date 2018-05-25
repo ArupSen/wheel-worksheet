@@ -155,6 +155,9 @@ var formHandlers = {
       display.showLengths(wheels.workSheet.length - 1);
       wheels.saveToLocalStorage();
       dom.save.setAttribute('disabled', 'disabled');
+      display.disableInputs();
+      dom.edit.removeAttribute('disabled');
+      dom.browse.removeAttribute('disabled');
       event.preventDefault();
     },
   newSheet: function() {
@@ -265,12 +268,17 @@ var display = {
   },
   disableInputs: function() {
     Array.from(dom.inputs).forEach(function (input) {
-      input.value = "";
       input.setAttribute('disabled', 'disabled');
     });
     dom.notes.setAttribute('disabled', 'disabled');
     dom.front.setAttribute('disabled', 'disabled');
     dom.rear.setAttribute('disabled', 'disabled');
+  },
+  clearInputs: function() {
+    Array.from(dom.inputs).forEach(function(input) {
+      input.value = '';
+    });
+    dom.notes.value = '';
   },
   // displays a sheet
   viewSheet: function(sheetNumber) {
