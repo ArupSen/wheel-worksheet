@@ -10,8 +10,16 @@
     next: document.getElementById('next')
   };
 
-  // wheels object will hold wheelset data
-  // methods to manipulate that array
+  /**
+   * The wheels object contains the following properties and methods
+   * 1. workSheet - an array to hold sheet objects
+   * 2. priceList - as the name suggests, list of unit prices
+   * 3. sampleData - sample sheets to use during development
+   * 4. addSheet - adds a sheet object to the workSheet array
+   * 5. calculateLength - the spoke length calculator
+   * 6. saveToLocalStorage - saves workSheet to localStorage 
+   * 7. getArrayIndex - finds index of workSheet given sheet id
+   */
   var wheels = {
     workSheet: [],
     priceList: {
@@ -79,6 +87,11 @@
       }
     },
     // previous / next buttons need to know where the sheet is located
+    /**
+     * Finds where the given sheet is in the workSheet array
+     * @param {string} sheetID - 16 char string
+     * @returns {number} - could also return undefined
+     */
     getArrayIndex: function(sheetID) {
       var arrayIndex;
       this.workSheet.forEach(function(sheet, index) {
@@ -90,6 +103,15 @@
     }
   };
 
+/**
+ * The formHandlers object contains the following:
+ * 1. save - creates a sheet object based on input values
+ * 2. newSheet - sets up the inputs ready for new sheet
+ * 3. load - load button loads sampleData
+ * 4. browse - sets up page for browsing sheets starting at zero
+ * 5. next - displays next sheet in workSheet
+ * 6. previous - displays previous sheet in workSheet
+ */
 var formHandlers = {
   // create objects using Object.defineProperty
   // var newObj = Object.defineProperty({},
@@ -114,7 +136,7 @@ var formHandlers = {
       values.notes = dom.notes.value;
       values.patternFront = dom.front.value;
       values.patternRear = dom.rear.value;
-      // create a random string for workSheet ID
+      // create a 16 char random string for workSheet ID
       function randomString() {
         var chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
         var output = '';
@@ -176,7 +198,12 @@ var formHandlers = {
     event.preventDefault();
   }
 };
-
+/**
+ * The display object contains the following:
+ * 1. showLengths - appends lengths to spokes required table
+ * 2. disableInputs - for showing data rather than getting
+ * 3. viewSheet - displays all the values held in a sheet
+ */
 var display = {
   showLengths: function(sheetNumber) {
   // will display one set of lengths
