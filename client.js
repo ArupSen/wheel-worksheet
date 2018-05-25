@@ -1,13 +1,16 @@
   console.log('Not working? - debugger!');
   // dom object holds repeated dom lookups
-  var dom = {
+  const dom = {
     inputs: document.getElementsByTagName('input'),
     notes: document.getElementById('notes'),
     front: document.getElementById('patternFront'),
     rear: document.getElementById('patternRear'),
     edit: document.getElementById('edit'),
     previous: document.getElementById('previous'),
-    next: document.getElementById('next')
+    next: document.getElementById('next'),
+    browse: document.getElementById('browse'),
+    load: document.getElementById('load'),
+    save: document.getElementById('save')
   };
 
   /**
@@ -151,6 +154,7 @@ var formHandlers = {
       wheels.addSheet(values);
       display.showLengths(wheels.workSheet.length - 1);
       wheels.saveToLocalStorage();
+      dom.save.setAttribute('disabled', 'disabled');
       event.preventDefault();
     },
   newSheet: function() {
@@ -168,6 +172,8 @@ var formHandlers = {
     dom.edit.setAttribute('disabled', 'disabled');
     dom.previous.setAttribute('disabled', 'disabled');
     dom.next.setAttribute('disabled', 'disabled');
+    dom.browse.setAttribute('disabled', 'disabled');
+    dom.load.setAttribute('disabled', 'disabled');
   },
   load: function(event) {
     localStorage.clear();
