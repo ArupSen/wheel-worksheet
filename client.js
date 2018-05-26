@@ -1,3 +1,4 @@
+'use strict';
   console.log('Not working? - debugger!');
   // dom object holds repeated dom lookups
   const dom = {
@@ -20,7 +21,7 @@
    * 3. sampleData - sample sheets to use during development
    * 4. addSheet - adds a sheet object to the workSheet array
    * 5. calculateLength - the spoke length calculator
-   * 6. saveToLocalStorage - saves workSheet to localStorage 
+   * 6. saveToLocalStorage - saves workSheet to localStorage
    * 7. getArrayIndex - finds index of workSheet given sheet id
    */
   var wheels = {
@@ -247,10 +248,10 @@ var display = {
     }
     var rearRight = {
       crossNumber: currentSheet.patternRear,
-      centreToFlange: currentSheet.frontLeftCentreToFlange,
+      centreToFlange: currentSheet.rearRightCentreToFlange,
       effectiveRimDiameter: currentSheet.effectiveRimDiameterRear,
-      spokeHoleDiameter: currentSheet.rearLeftHoleDiameter,
-      flangeDiameter: currentSheet.rearLeftFlangeDiameter,
+      spokeHoleDiameter: currentSheet.rearRightHoleDiameter,
+      flangeDiameter: currentSheet.rearRightFlangeDiameter,
       numberOfSpokes: currentSheet.numberOfSpokesRear
     }
     var  wheelSpecs = [frontLeft, frontRight, rearLeft, rearRight];
@@ -262,9 +263,9 @@ var display = {
     // some of the wheelSpec objects may be null
     // then it's just a case of changing the boundaries of the for loop
     var spokeData = Array.from(document.getElementById('lengths').getElementsByTagName('td'));
-    for (var i = 1; i < spokeData.length; i+=3) {
-        spokeData[i].innerText = spokeLengths[i % 4];
-        spokeData[i + 1].innerText = wheelSpecs[i % 4].numberOfSpokes / 2;
+    for (let i = 1, j = 0; i < spokeData.length, j < spokeLengths.length; i+=3, j++) {
+        spokeData[i].innerText = spokeLengths[j];
+        spokeData[i + 1].innerText = wheelSpecs[j].numberOfSpokes / 2;
     }
   },
   disableInputs: function() {
