@@ -254,18 +254,25 @@ var display = {
       flangeDiameter: currentSheet.rearRightFlangeDiameter,
       numberOfSpokes: currentSheet.numberOfSpokesRear
     }
+
     var  wheelSpecs = [frontLeft, frontRight, rearLeft, rearRight];
     var spokeLengths = [];
     wheelSpecs.forEach(function(spec) {
       spokeLengths.push(wheels.calculateLength(spec));
     });
-    // if it's only the front or the rear wheel, what then?
-    // some of the wheelSpec objects may be null
-    // then it's just a case of changing the boundaries of the for loop
-    var spokeData = Array.from(document.getElementById('lengths').getElementsByTagName('td'));
-    for (let i = 1, j = 0; i < spokeData.length, j < spokeLengths.length; i+=3, j++) {
-        spokeData[i].innerText = spokeLengths[j];
-        spokeData[i + 1].innerText = wheelSpecs[j].numberOfSpokes / 2;
+    var spokeTable = Array.from(document.getElementById('lengths').getElementsByTagName('td'));
+    for (let i = 1, j = 0; i < spokeTable.length, j < spokeLengths.length; i+=3, j++) {
+      // handle the case of front or rear wheel only
+      if(isNaN(spokeLengths[j])) {
+        spokeTable[i].innerText = '';
+      } else {
+        spokeTable[i].innerText = spokeLengths[j];
+      }
+      if(wheelSpecs[j].numberOfSpokes / 2 === 0) {
+        spokeTable[i + 1].innerText = '';
+      } else {
+        spokeTable[i + 1].innerText = wheelSpecs[j].numberOfSpokes / 2;
+      }
     }
   },
   disableInputs: function() {
