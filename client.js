@@ -202,6 +202,15 @@ var formHandlers = {
       display.viewSheet(currentIndex - 1);
     }
     event.preventDefault();
+  },
+  edit: function(event) {
+    Array.from(dom.inputs).forEach(function (input) {
+      input.removeAttribute('disabled');
+    });
+    dom.notes.removeAttribute('disabled');
+    dom.front.removeAttribute('disabled');
+    dom.rear.removeAttribute('disabled');
+    event.preventDefault();
   }
 };
 /**
