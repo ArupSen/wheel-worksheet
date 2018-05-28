@@ -142,10 +142,10 @@ var formHandlers = {
       values.patternRear = dom.rear.value;
       // create a 16 char random string for workSheet ID
       function randomString() {
-        var chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
-        var output = '';
-        for (var i=0; i < 16; i++) {
-          var randomNumber = Math.floor(Math.random() * chars.length);
+        let chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+        let output = '';
+        for (let i=0; i < 16; i++) {
+          let randomNumber = Math.floor(Math.random() * chars.length);
           output += chars.charAt(randomNumber);
         }
         return output;
