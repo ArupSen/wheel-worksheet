@@ -320,9 +320,7 @@ var display = {
 };
 /*
 TODO for pure js version
-[done] create a calculate function
 create a form validation function called when you save
-[done] create an area to display results
 
 Before developing the Spoke Length Calculator further
 What I want is to create a digital version of my workSheet
@@ -330,20 +328,27 @@ What I want is to create a digital version of my workSheet
 - it should allow entry of same data as workSheet
 - it should allow you to 'turn' pages
 - it should allow you to edit pages
-- [done] it should allow you to save pages to storage
 - it should allow searching of pages
 - it should have some data for parts
 
 // use placeholder text to save space
 // use an object for priceList
 // save function should save that workSheet and do a cost and spoke length calculation. Then add to local storage
-[done] with all the extra data should wheelSet objects now be called workSheet?
 // have a look at Bootstrap validations
 // buttons should be disabled when they just repeat the current action such as saving the same data multiple times
 // should workSheet objects have unique ids? For example when you edit or is array index enough?
-// Fields should be disabled in browse mode but enabled in edit mode
+// Sometimes parts are provided by the client and sometimes not. Should there be a Boolean called ‘provided’. This will help with the cost calculation. Should another value be cost? Rims and hubs could have a default of true and spokes and rim tape false. 
+// edit button should enable inputs. The save button is set up only to save new sheets so it should be modified to handle existing sheets. 
+// refactor for enableInputs
+// set up an initial state, perhaps an init function
+// look into Firebase, use the free tier
+// load sampleData via ajax/ Fields should be disabled in browse mode but enabled in edit mode
 
 
+- [done] it should allow you to save pages to storage
+- [done] create an area to display results
+- [done] create a calculate function
+- [done] with all the extra data should wheelSet objects now be called workSheet?
 - [done] remove old hub fields and set up new 3 x 3 grid to accupt values
 - [done] refactor calculator to accept cross parameter
 - [done] display should fill 4 calculations
