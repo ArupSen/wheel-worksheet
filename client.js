@@ -271,17 +271,15 @@ var display = {
     });
     var spokeTable = Array.from(document.getElementById('lengths').getElementsByTagName('td'));
     for (let i = 1, j = 0; i < spokeTable.length, j < spokeLengths.length; i+=3, j++) {
+
+      let length = spokeLengths[j];
+      let cell = spokeTable[i];
+      let count = spokeTable[i + 1];
+      let halfCount = wheelSpecs[j].numberOfSpokes / 2;
+
       // handle the case of front or rear wheel only
-      if(isNaN(spokeLengths[j])) {
-        spokeTable[i].innerText = '';
-      } else {
-        spokeTable[i].innerText = spokeLengths[j];
-      }
-      if(wheelSpecs[j].numberOfSpokes / 2 === 0) {
-        spokeTable[i + 1].innerText = '';
-      } else {
-        spokeTable[i + 1].innerText = wheelSpecs[j].numberOfSpokes / 2;
-      }
+      isNaN(length) ? cell.innerText = '' : cell.innerText = length;
+      halfCount === 0 ? count.innerText = '' : count.innerText = halfCount;
     }
   },
   disableInputs: function() {
