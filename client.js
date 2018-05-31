@@ -15,6 +15,25 @@
   };
 
   /**
+   * Stuff that isn't really part of the MVC as such
+   */
+  var util = {
+      // create a random string for workSheet ID
+    randomString: function (strLength) {
+      if (strLength < 1  || strLength > 32) {
+        throw new RangeError('Outside allowed range of 32');
+      }
+        let chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+        let output = '';
+        for (let i=0; i < strLength; i++) {
+          let randomNumber = Math.floor(Math.random() * chars.length);
+          output += chars.charAt(randomNumber);
+        }
+        return output;
+      }
+  };
+
+  /**
    * The wheels object contains the following properties and methods
    * 1. workSheet - an array to hold sheet objects
    * 2. priceList - as the name suggests, list of unit prices
@@ -140,18 +159,8 @@ var formHandlers = {
       values.notes = dom.notes.value;
       values.patternFront = dom.front.value;
       values.patternRear = dom.rear.value;
-      // create a 16 char random string for workSheet ID
-      function randomString() {
-        let chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
-        let output = '';
-        for (let i=0; i < 16; i++) {
-          let randomNumber = Math.floor(Math.random() * chars.length);
-          output += chars.charAt(randomNumber);
-        }
-        return output;
-      }
       // assign a 16 character random string as id to object
-      values.id = randomString();
+      values.id = util.randomString(16);
       wheels.addSheet(values);
       display.showLengths(wheels.workSheet.length - 1);
       wheels.saveToLocalStorage();
