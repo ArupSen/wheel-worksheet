@@ -325,6 +325,20 @@ var display = {
     dom[button].removeAttribute('disabled');
   }
 };
+// this is kind of main method
+var App = {
+  // what would I like to see when initially load the page
+  init: function() {
+    display.disableInputs();
+    display.disableButton('save');
+    display.disableButton('load');
+    localStorage.clear();
+    localStorage.setItem('worksheets', wheels.sampleData);
+    wheels.workSheet = JSON.parse(localStorage.getItem('worksheets'));
+    display.viewSheet(0);
+  }
+};
+App.init();
 /*
 TODO for pure js version
 create a form validation function called when you save
